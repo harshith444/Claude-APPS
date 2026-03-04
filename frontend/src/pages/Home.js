@@ -20,7 +20,8 @@ function Home() {
       params.append('sort', 'latest');
 
       const response = await axios.get(`${API_URL}/courses?${params}`);
-      setCourses(response.data);
+      const courseData = Array.isArray(response.data) ? response.data : response.data.courses || [];
+      setCourses(courseData);
       setError('');
     } catch (err) {
       setError('Failed to load courses');

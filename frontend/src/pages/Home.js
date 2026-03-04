@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import CourseCard from '../components/CourseCard';
 import './Home.css';
@@ -11,11 +11,7 @@ function Home() {
   const [error, setError] = useState('');
   const [filters, setFilters] = useState({ incomeType: '', difficulty: '' });
 
-  useEffect(() => {
-    fetchCourses();
-  }, [filters]);
-
-  const fetchCourses = async () => {
+  const fetchCourses = useCallback(async () => {
     try {
       setLoading(true);
       const params = new URLSearchParams();
@@ -32,7 +28,11 @@ function Home() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters]);
+
+  useEffect(() => {
+    fetchCourses();
+  }, [fetchCourses]);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;

@@ -1,0 +1,12 @@
+[build]
+  command = "cd frontend && npm install && npm run build"
+  publish = "frontend/build"
+
+[build.environment]
+  NODE_ENV = "production"
+  REACT_APP_API_URL = "$REACT_APP_API_URL"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
